@@ -1,0 +1,5 @@
+Business Summary for Joe Biden: 
+Riders   Number of Miles   Number of Minutes   Ride Fare Amount 
+ 1  	 1.0 		 1   		 9.00 
+
+There were no ratings. 
