@@ -19,7 +19,7 @@ int main() {
 	SOCKET s; 
 	struct sockaddr_in server;
 	char* message;
-	char* server_reply[10000];
+	char server_reply[10000];
 	int recv_size;
 
 	printf("initializing winsock \n");
@@ -65,19 +65,35 @@ int main() {
 	puts("Data sent successfully");
 
 	// get a reply from Google
-	if ((recv_size = recv(s, server_reply, 10000, 0)) == SOCKET_ERROR) {
+	recv_size = recv(s, server_reply, sizeof(server_reply) - 1, 0);
+	if (recv_size == SOCKET_ERROR)
+	{
 		puts("Recieve Failed");
 	}
 
-	puts("Reply recieved");
 
-	// make the reply a c formatted string before printing
-	server_reply[recv_size] = '\0';
+	// attempted to fix out out bounds error - truncating if too large before null terminating
+	if (recv_size < sizeof(server_reply))
+	{
+		server_reply[recv_size] = '\0';
+	}
+	else
+	{
+		server_reply[sizeof(server_reply) - 1] = '\0';
+	}
+
+	puts("Reply received");
+
 	// so somewhere this gets really jacked up I do think it's because of the size of recv_size
 	// but increasing it doesnt seeem to fix it so I'll check on that later
 	// Either way I do think this sends and recieves from a server so thats a start
 
 	// print that jawn 
-	printf(server_reply);
+	printf("%s\n", server_reply);
+
+	// clean up
+	closesocket(s);
+	WSACleanup();
+
 	return 0;
 }
