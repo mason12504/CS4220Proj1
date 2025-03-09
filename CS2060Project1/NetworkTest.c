@@ -19,6 +19,7 @@ int main() {
 	SOCKET s; 
 	struct sockaddr_in server;
 	char* message;
+	// this is kinda too large and should be on heap, something to fix later
 	char* server_reply[10000];
 	int recv_size;
 

@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NetworkTest.c">
+    <ClCompile Include="OpenSSLTest.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
