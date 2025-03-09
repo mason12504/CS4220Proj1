@@ -3,7 +3,7 @@
 // project 1
 // CS 4220
 // https://www.binarytides.com/winsock-socket-programming-tutorial/ 
-
+// seems a lil outdated but it'll do 
 
 #include <stdio.h>
 #include <winsock2.h>
