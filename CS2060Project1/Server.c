@@ -99,7 +99,7 @@ int main()
     }
 
     main_ctx = context_creation();
-    //context_config(main_ctx);
+    context_config(main_ctx);
 
     main_sock = socket_creation(PORT);
 
