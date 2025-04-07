@@ -30,6 +30,27 @@
 #include <WinSock2.h>
 #pragma comment(lib, "WS2_32.lib")
 
+SSL_CERT_FILE = "server.crt";
+
+// from the server, seeing if this might work for the cert files?
+void context_config(SSL_CTX* ctx)
+{
+    if (SSL_CTX_use_certificate_file(ctx, "server.crt", SSL_FILETYPE_PEM) <= 0)
+    {
+        ERR_print_errors_fp(stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    if (SSL_CTX_use_PrivateKey_file(ctx, "server.key", SSL_FILETYPE_PEM) <= 0)
+    {
+        ERR_print_errors_fp(stderr);
+        exit(EXIT_FAILURE);
+    }
+
+}
+
+//////////
+
 /* Helper function to create a BIO connected to the server */
 static BIO* create_socket_bio(const char* hostname, const char* port, int family)
 {
@@ -236,6 +257,8 @@ test:
         printf("Failed to create the SSL_CTX\n");
         goto end;
     }
+
+    context_config(ctx);
 
     /*
      * Configure the client to abort the handshake if certificate

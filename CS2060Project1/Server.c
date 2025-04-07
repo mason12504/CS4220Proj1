@@ -65,18 +65,25 @@ SSL_CTX* context_creation()
         exit(EXIT_FAILURE);
     }
 
+    if (SSL_CTX_set_min_proto_version(s_ctx, TLS1_2_VERSION) != 1)
+    {
+        perror("error setting minimum TLS version to 1.2 - exiting");
+        exit(EXIT_FAILURE);
+
+    }
+
     return s_ctx;
 }
 
 void context_config(SSL_CTX* ctx)
 {
-    if (SSL_CTX_use_certificate_file(ctx, "cert.pem", SSL_FILETYPE_PEM) <= 0)
+    if (SSL_CTX_use_certificate_file(ctx, "server.crt", SSL_FILETYPE_PEM) <= 0)
     {
         ERR_print_errors_fp(stderr);
         exit(EXIT_FAILURE);
     }
 
-    if (SSL_CTX_use_PrivateKey_file(ctx, "key.pem", SSL_FILETYPE_PEM) <= 0)
+    if (SSL_CTX_use_PrivateKey_file(ctx, "server.key", SSL_FILETYPE_PEM) <= 0)
     {
         ERR_print_errors_fp(stderr);
         exit(EXIT_FAILURE);
